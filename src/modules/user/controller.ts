@@ -12,6 +12,11 @@ interface User {
 
 export const signUp = async (ctx: any) => {
   const { email, name, password } = ctx.request.body;
+  if (email.trim() === "" || name.trim() === "" || password.trim() === "") {
+    ctx.status = 401;
+    ctx.body = { error: "Every filed is required and can't be empty field" };
+    return;
+  }
   const user = { id: crypto.randomUUID(), email, name, password };
   await db.storage.add(user.id, user);
   ctx.body = { message: "User created", user };

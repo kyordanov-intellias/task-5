@@ -6,8 +6,6 @@ const ajv = new Ajv();
 ajvFormats(ajv);
 
 export const validate = (schema: object) => {
-  console.log(`we are in the validator middleware`);
-
   return async (ctx: Context, next: Next) => {
     const valid = ajv.validate(schema, ctx.request.body);
     if (!valid) {

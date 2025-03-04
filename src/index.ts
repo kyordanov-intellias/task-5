@@ -3,6 +3,7 @@ import bodyParser from "koa-bodyparser";
 import { db } from "./db";
 import userRouter from "./modules/user/router";
 import privateRouter from "./modules/private/router";
+import notesRouter from "./modules/notes/router";
 import config from "./config";
 
 (async () => {
@@ -10,14 +11,9 @@ import config from "./config";
   const app = new Koa();
   app.use(bodyParser());
 
-  // app.use(async (ctx, next) => {
-  //   console.log("Request Headers:", ctx.headers);
-  //   console.log("Request Body:", ctx.request.body);
-  //   await next();
-  // });
-
   app.use(userRouter.routes());
   app.use(privateRouter.routes());
+  app.use(notesRouter.routes());
 
   app.listen(config.port, () => {
     console.log(`App is running on port ${config.port}`);
